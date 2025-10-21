@@ -1,25 +1,46 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 function CadastrarMesas() {
-  const [mesa, setMesa] = useState({ numero: '', capacidade: '', status: '' });
+  const [numeroMesa, setNumeroMesa] = useState("");
+  const [capacidade, setCapacidade] = useState("");
+  const [status, setStatus] = useState("");
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setMesa(prev => ({ ...prev, [name]: value }));
-  }
-
-  function handleSubmit(e) {
+  function salvarMesa(e) {
     e.preventDefault();
-    alert(`Mesa ${mesa.numero} cadastrada com sucesso!`);
+    if (!numeroMesa || !capacidade || !status) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+    alert(`Mesa ${numeroMesa} cadastrada com sucesso!`);
+    setNumeroMesa("");
+    setCapacidade("");
+    setStatus("");
   }
 
   return (
-    <div>
-      <h1>Cadastrar Mesas</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="numero" placeholder="Número da mesa" onChange={handleChange} />
-        <input type="text" name="capacidade" placeholder="Capacidade" onChange={handleChange} />
-        <input type="text" name="status" placeholder="Status (ocupada/disponível)" onChange={handleChange} />
+    <div style={{ padding: "20px" }}>
+      <h1>Cadastrar Mesa</h1>
+
+      <form onSubmit={salvarMesa}>
+        <div>
+          <label>Número da Mesa:</label>
+          <input type="text" value={numeroMesa} onChange={(e) => setNumeroMesa(e.target.value)}/>
+        </div>
+
+        <div>
+          <label>Capacidade:</label>
+          <input type="number" value={capacidade} onChange={(e) => setCapacidade(e.target.value)}/>
+        </div>
+
+        <div>
+          <label>Status:</label>
+          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="">Selecione...</option>
+            <option value="disponível">Disponível</option>
+            <option value="ocupada">Ocupada</option>
+          </select>
+        </div>
+
         <button type="submit">Salvar</button>
       </form>
     </div>

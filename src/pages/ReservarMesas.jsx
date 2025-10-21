@@ -1,33 +1,67 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 function ReservarMesas() {
-  const [reserva, setReserva] = useState({
-      nome: ''
-    , contato: ''
-    , data: ''
-    , hora: ''
-    , mesa: '' });
+  const [nome, setNome] = useState("");
+  const [contato, setContato] = useState("");
+  const [data, setData] = useState("");
+  const [hora, setHora] = useState("");
+  const [mesa, setMesa] = useState("");
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setReserva(prev => ({ ...prev, [name]: value }));
-  }
-
-  function handleSubmit(e) {
+  function confirmarReserva(e) {
     e.preventDefault();
-    alert(`Reserva confirmada para ${reserva.nome}!`);
+
+    if (!nome || !contato || !data || !hora || !mesa) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    alert(`Reserva feita para ${nome} na mesa ${mesa}.`);
+    setNome("");
+    setContato("");
+    setData("");
+    setHora("");
+    setMesa("");
   }
 
   return (
-    <div>
-      <h1>Reservar Mesas</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="nome" placeholder="Nome do cliente" onChange={handleChange} />
-        <input type="text" name="contato" placeholder="Contato" onChange={handleChange} />
-        <input type="date" name="data" onChange={handleChange} />
-        <input type="time" name="hora" onChange={handleChange} />
-        <input type="text" name="mesa" placeholder="Número da mesa" onChange={handleChange} />
-        <button type="submit">Confirmar Reserva</button>
+    <div style={{ padding: "20px" }}>
+      <h1>Reservar Mesa</h1>
+
+      <form onSubmit={confirmarReserva}>
+        <div>
+          <label>Nome do Cliente:</label>
+          <input
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Contato:</label>
+          <input
+            type="text"
+            value={contato}
+            onChange={(e) => setContato(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Data:</label>
+          <input type="date" value={data} onChange={(e) => setData(e.target.value)} />
+        </div>
+
+        <div>
+          <label>Hora:</label>
+          <input type="time" value={hora} onChange={(e) => setHora(e.target.value)} />
+        </div>
+
+        <div>
+          <label>Número da Mesa:</label>
+          <input type="text" value={mesa} onChange={(e) => setMesa(e.target.value)}/>
+        </div>
+
+        <button type="submit">Confirmar</button>
       </form>
     </div>
   );
